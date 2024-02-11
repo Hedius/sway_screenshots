@@ -31,6 +31,7 @@ if [ ! -z $REC_PID ]; then
 fi
 
 CHOICE=`$MENU -l 10 -p "How to make a screenshot?" << EOF
+flameshot-upload
 Fullscreen
 Focused
 Select-window
@@ -50,6 +51,9 @@ FILENAME="$TARGET/$(date +'%Y-%m-%d_%Hh%Mm%Ss_screenshot.png')"
 RECORDING="$TARGET_VIDEOS/$(date +'%Y-%m-%d_%Hh%Mm%Ss_recording.mp4')"
 
 case "$CHOICE" in
+    "flameshot-upload")
+        ~/.local/bin/flameshot-upload
+        exit ;;
     "Fullscreen")
         grim "$FILENAME" ;;
     "Region")
@@ -65,7 +69,7 @@ case "$CHOICE" in
         REC=1 ;;
     "Record-select-window")
         $RECORDER -g "$(echo "$WINDOWS"|slurp)" -f "$RECORDING"
-      
+
       REC=1 ;;
     "Record-region")
         $RECORDER -g "$(slurp)" -f "$RECORDING"
